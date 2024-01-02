@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamagePlayer : MonoBehaviour
 {
     //Get circle collider
     public Collider2D coll;
     //set health
-    public float health = 100f;
+    public int health = 100;
 
-    
+    public HealthBar healthBar;
+
+    public AudioSource GameMusic;
     // Start is called before the first frame update
     void Start()
     {
         coll = GetComponent<Collider2D>();
-        
+        GameMusic.Play();
+        healthBar.SetMaxHealth(health);
     }
 
     // Update is called once per frame
@@ -25,6 +29,8 @@ public class DamagePlayer : MonoBehaviour
         
         if(health <= 0)
         {
+            LevelManager.manager.GameOverSound();
+            LevelManager.manager.GameOver();
             Destroy(gameObject);
         }
     }
@@ -33,8 +39,8 @@ public class DamagePlayer : MonoBehaviour
     {
         while( coll ==true )
         {
-            health -= 5f;
-           
+            health -= 5;
+            healthBar.SetHealth(health);
             break;
         }
            
